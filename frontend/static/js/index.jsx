@@ -1,10 +1,14 @@
 import { Router } from "./router.js";
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+
+const root = createRoot(document.getElementById('root'));
 
 const routes = [
-    { path: '/', view: () => viewHome() },
-    { path: '/home', view: () => viewHome() },
-    { path: '/seats', view: () => viewSeats() },
-    { path: '/payment', view: () => viewPayment() },
+    { path: '/', view: () => root.render(<HomePage/>) },
+    { path: '/home', view: () => root.render(<HomePage/>) },
+    { path: '/seats', view: () => root.render(<SeatsPage/>) },
+    { path: '/payment', view: () => root.render(<PaymentPage/>) },
 ];
 
 const router = new Router(routes);
@@ -28,16 +32,14 @@ document.addEventListener('DOMContentLoaded', () => {
     navigate();
 });
 
-
-async function viewHome() {
-    document.getElementById('root').innerHTML = 'Select destination';
+function HomePage() {
+    return <h1>Where are you going?</h1>;
 }
 
-async function viewSeats() {
-    document.getElementById('root').innerHTML = 'Select seats';
+function SeatsPage() {
+    return <h1>Select seats</h1>;
 }
 
-async function viewPayment() {
-    document.getElementById('root').innerHTML = 'Ready to pay';
+function PaymentPage() {
+    return <h1>Get your money!</h1>;
 }
-
