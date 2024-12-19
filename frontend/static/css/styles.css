@@ -45,9 +45,9 @@ html {
 }
 
 .service {
-    width: 200px;
-    min-width: 200px;
-    height: 160px;
+    width: 13rem;
+    min-width: 13rem;
+    height: 10rem;
     background-color: #d4b9a7; 
     border-radius: 10px; 
     display: flex;
@@ -74,24 +74,85 @@ html {
     background-color: #c7a38a;
 }
 
+.page div {
+    box-sizing: border-box;
+}
 
+.search_menu {
+    min-width: 15rem;
+    position: absolute;
+    left: 0;
+    padding: 1rem;
+    background-color: #c7a38a;
+}
+
+.search_menu input {
+    display: block;
+}
+
+.page  {
+    position: relative;
+    border-top: #3498db solid 2px;
+    background-color: #ced8df;
+    min-height: calc(100% - 2px); /* 2px = border-top*/
+    max-width: 60rem;
+}
+
+.main {
+    position: absolute;
+    left: 15rem;
+    bottom: 0;
+    padding: 5px;
+    background-color: #cfc8c3;
+    width: calc(100% - 15rem);
+    height: 100%;
+}
+
+.tickets {
+    display: flex;
+    flex-flow: column nowrap;
+    max-height: calc(100% - 8.5rem);
+    /* border: solid 1px grey; */
+    overflow-y: auto;
+}
+
+.item {
+    max-width: 40rem;
+    padding: 15px 5px;
+    margin: 5px 0;
+    background-color: #b1c9ba;
+}
+
+.controls {
+    padding: 1.5rem 2rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.controls button {
+    width: 5rem;
+    padding: 5px;
+}
 
 
 /* Path line container */
-.path-line {
+.steps {
     display: flex;
     align-items: center;
     justify-content: center;
+    position: absolute;
+    bottom: 1rem;
+    left: calc(50% - 200px);
 }
 
 .step {
-    width: 40px;
-    height: 40px;
+    width: 2.5rem;
+    height: 2.5rem;
     display: flex;
     justify-content: center;
     align-items: center;
     color: black;
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: bold;
     border: #3498db 1px solid;
     border-radius: 50%;
@@ -103,7 +164,7 @@ html {
 }
 
 .line {
-    width: 80px;
+    width: 5rem;
     height: 2px;
     background-color: #3498db;
     flex-shrink: 0;

@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function Steps({active}) {
     return (
-        <div className="path-line">
+        <div className="steps">
             <div className={active == 1 ? 'step cur-step' : 'step'}>1</div>
             <div className="line"></div>
             <div className={active == 2 ? 'step cur-step' : 'step'}>2</div>

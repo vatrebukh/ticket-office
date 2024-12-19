@@ -3,15 +3,61 @@ import Steps from './steps';
 
 export default function TicketSearchPage() {
     return (
+        <div className="page">
+            <SearchMenu />
+            <div className="main">
+                <SearchResults />
+                <Navigation />
+                <Steps active="1" />
+            </div>
+        </div>
+    );
+}
+
+
+function SearchMenu() {
+    return (
+        <div className='search_menu'>
+            <span>Search menu</span>
+            <br></br>
+            <br></br>
+            <label>Origin</label>
+            <input type='text'></input>
+            <br></br>
+            <label>Destination</label>
+            <input type='text'></input>
+            <br></br>
+            <label>Departure date</label>
+            <input type='date'></input>
+            <br></br>
+            <button>Search</button>
+        </div>
+    );
+}
+
+function SearchResults() {
+    return (
         <>
-            <Steps active="1" />
-            <Steps active="2" />
-            <Steps active="3" />
-            <Steps active="4" />
+            <span>Available seats</span>
+            <br></br>
+            <div className='tickets'>
+                <div className='item'>ticket description 1</div>
+                <div className='item'>ticket description 2</div>
+                <div className='item'>ticket description 3</div>
+                <div className='item'>ticket description 4</div>
+            </div>
         </>
     );
 }
 
+function Navigation() {
+    return (
+        <div className='controls'>
+            <button>prev</button>
+            <button>next</button>
+        </div>
+    );
+}
 
 /*
 search menu
