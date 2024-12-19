@@ -16,9 +16,11 @@ html {
 #root {
     width: 100%;
     min-width: 800px;
-    height: 100%;
+    height: calc(100% - 40px);
     position: absolute;
-    /* background-color:whitesmoke; */
+    top: 40px;
+    left: 0;
+    background-color:whitesmoke;
 }
 
 #service-menu {
@@ -70,4 +72,39 @@ html {
 .service a:hover {
     cursor: pointer;
     background-color: #c7a38a;
+}
+
+
+
+
+/* Path line container */
+.path-line {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.step {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    font-size: 16px;
+    font-weight: bold;
+    border: #3498db 1px solid;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.cur-step {
+    background-color: #3498db;
+}
+
+.line {
+    width: 80px;
+    height: 2px;
+    background-color: #3498db;
+    flex-shrink: 0;
 }
