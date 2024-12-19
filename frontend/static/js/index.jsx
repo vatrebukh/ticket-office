@@ -1,13 +1,13 @@
 import { Router } from "./router.js";
 import React from 'react';
 import { createRoot } from 'react-dom/client';
+import HomePage from "./home.jsx";
 
 const root = createRoot(document.getElementById('root'));
 
 const routes = [
     { path: '/', view: () => root.render(<HomePage/>) },
-    { path: '/home', view: () => root.render(<HomePage/>) },
-    { path: '/seats', view: () => root.render(<SeatsPage/>) },
+    { path: '/tickets', view: () => root.render(<TicketsPage/>) },
     { path: '/payment', view: () => root.render(<PaymentPage/>) },
 ];
 
@@ -32,14 +32,11 @@ document.addEventListener('DOMContentLoaded', () => {
     navigate();
 });
 
-function HomePage() {
-    return <h1>Where are you going?</h1>;
-}
-
-function SeatsPage() {
-    return <h1>Select seats</h1>;
-}
 
 function PaymentPage() {
     return <h1>Get your money!</h1>;
+}
+
+function TicketsPage() {
+    return <h1>Where are you going</h1>;
 }
