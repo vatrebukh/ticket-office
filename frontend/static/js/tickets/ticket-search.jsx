@@ -4,11 +4,23 @@ import { Navigation, Steps} from './steps';
 import { busTickets } from './data';
 
 export default function TicketSearchPage() {
+    const [filteredTickets, setFilteredTickets] = useState([]);
+
+    function markSelected(ticketId) {   
+        setFilteredTickets(filteredTickets.map(ticket => {   
+            if (ticket.id === ticketId) {
+                return {...ticket, selected: !ticket.selected}
+            } else {
+                return {...ticket, selected: false}
+            }
+        }));
+    }
+
     return (
         <div className="page">
-            <SearchMenu />
+            <SearchMenu searchHandler={setFilteredTickets} />
             <div className="main">
-                <SearchResults />
+                <SearchResults tickets={filteredTickets} handleClick={markSelected} />
                 <Navigation />
                 <Steps active="1" />
             </div>
@@ -17,14 +29,18 @@ export default function TicketSearchPage() {
 }
 
 
-function SearchMenu() {
+function SearchMenu({searchHandler}) {
     const today = new Date().toISOString().split('T')[0];
     const [origin, setOrigin] = useState('');
     const [destination, setDestination] = useState('');
     const [date, setDate] = useState(today);
 
-    function onSubmit() {
-        console.log(`Origin: ${origin}, Destination: ${destination}, Date: ${date}`);
+    function doSearch() {
+        searchHandler(busTickets.filter(ticket => ticket.origin === origin && ticket.destination === destination));
+        clearFields();
+    }
+
+    function clearFields() {
         setOrigin('');
         setDestination('');
         setDate(today);
@@ -43,37 +59,26 @@ function SearchMenu() {
             <label className='small'>Departure date</label>
             <input type='date' value={date} onChange={e => setDate(e.target.value)}></input>   
 
-            <button className='button' onClick={onSubmit}>Search</button>
+            <button className='button' onClick={doSearch}>Search</button>
         </div>
     );
 }
 
-function SearchResults() {
-    const [tickets, setTickets] = useState(busTickets);
-
-    function selectTicket(ticketId) {   
-        setTickets(tickets.map(ticket => {   
-            if (ticket.id === ticketId) {
-                return {...ticket, selected: !ticket.selected}
-            } else {
-                return {...ticket, selected: false}
-            }
-        }));
-    }
+function SearchResults({tickets, handleClick}) {
 
     return (
         <>
             <span className='section-title'>Available seats</span>
             <div className='tickets'>
-                {tickets.map(ticket => <TicketDetails ticket={ticket} key={ticket.id} selectTicket={() => selectTicket(ticket.id)}/>)}
+                {tickets.map(ticket => <TicketDetails ticket={ticket} key={ticket.id} markSelected={() => handleClick(ticket.id)}/>)}
             </div>
         </>
     );
 }
 
-function TicketDetails({ticket, selectTicket}) {
+function TicketDetails({ticket, markSelected}) {
     return (
-        <div className={'ticket' + (ticket.selected ? ' selected' : '')} onClick={selectTicket}>
+        <div className={'ticket' + (ticket.selected ? ' selected' : '')} onClick={markSelected}>
             <div className='route'>
                 <span className='strong'>{ticket.origin}</span>
                 <span> - </span>
