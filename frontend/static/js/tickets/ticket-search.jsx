@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { Navigation, Steps} from './steps';
+import { busTickets } from './data';
 
 export default function TicketSearchPage() {
     return (
@@ -30,7 +31,7 @@ function SearchMenu() {
     }
 
     return (
-        <div className='search_menu'>
+        <div className='search-menu'>
             <span className='section-title'>Search menu</span>
 
             <label className='small'>Origin</label>
@@ -48,19 +49,55 @@ function SearchMenu() {
 }
 
 function SearchResults() {
+    const [tickets, setTickets] = useState(busTickets);
+
+    function selectTicket(ticketId) {   
+        setTickets(tickets.map(ticket => {   
+            if (ticket.id === ticketId) {
+                return {...ticket, selected: !ticket.selected}
+            } else {
+                return {...ticket, selected: false}
+            }
+        }));
+    }
+
     return (
         <>
             <span className='section-title'>Available seats</span>
             <div className='tickets'>
-                <div className='item'>ticket description 1</div>
-                <div className='item'>ticket description 2</div>
-                <div className='item'>ticket description 3</div>
-                <div className='item'>ticket description 4</div>
+                {tickets.map(ticket => <TicketDetails ticket={ticket} key={ticket.id} selectTicket={() => selectTicket(ticket.id)}/>)}
             </div>
         </>
     );
 }
 
+function TicketDetails({ticket, selectTicket}) {
+    return (
+        <div className={'ticket' + (ticket.selected ? ' selected' : '')} onClick={selectTicket}>
+            <div className='route'>
+                <span className='strong'>{ticket.origin}</span>
+                <span> - </span>
+                <span className='strong'>{ticket.destination}</span>
+            </div>
+            <div className='route small'>
+                <span>Departure time: {ticket.departureTime}</span>
+                <span>{calcTimeDifference(ticket.departureTime, ticket.arrivalTime)}</span>
+                <span>Arrival time: {ticket.arrivalTime}</span>
+            </div>
+            <div className='price'>{ticket.price} USD</div>
+        </div>
+    );
+}
+
+function calcTimeDifference(time1, time2) {
+    let time1Parts = time1.split(':');
+    let time2Parts = time2.split(':');
+    let time1Minutes = parseInt(time1Parts[0]) * 60 + parseInt(time1Parts[1]);
+    let time2Minutes = parseInt(time2Parts[0]) * 60 + parseInt(time2Parts[1]);
+    let hours = Math.floor((time2Minutes - time1Minutes) / 60);
+    let minutes = (time2Minutes - time1Minutes) % 60;
+    return `${hours} hrs ${minutes.toString().padStart(2, '0')} min`;
+}
 
 
 /*
