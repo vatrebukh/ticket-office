@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function Steps({active}) {
+export function Steps({active}) {
     return (
         <div className="steps">
             <div className={active == 1 ? 'step cur-step' : 'step'}>1</div>
@@ -10,6 +10,15 @@ export default function Steps({active}) {
             <div className={active == 3 ? 'step cur-step' : 'step'}>3</div>
             <div className="line"></div>
             <div className={active == 4 ? 'step cur-step' : 'step'}>4</div>
+        </div>
+    );
+}
+
+export function Navigation() {
+    return (
+        <div className='controls'>
+            <button>prev</button>
+            <button>next</button>
         </div>
     );
 }

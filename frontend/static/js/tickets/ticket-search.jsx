@@ -1,5 +1,6 @@
 import React from 'react';
-import Steps from './steps';
+import { useState } from 'react';
+import { Navigation, Steps} from './steps';
 
 export default function TicketSearchPage() {
     return (
@@ -16,21 +17,32 @@ export default function TicketSearchPage() {
 
 
 function SearchMenu() {
+    const today = new Date().toISOString().split('T')[0];
+    const [origin, setOrigin] = useState('');
+    const [destination, setDestination] = useState('');
+    const [date, setDate] = useState(today);
+
+    function onSubmit() {
+        console.log(`Origin: ${origin}, Destination: ${destination}, Date: ${date}`);
+        setOrigin('');
+        setDestination('');
+        setDate(today);
+    }
+
     return (
         <div className='search_menu'>
-            <span>Search menu</span>
-            <br></br>
-            <br></br>
-            <label>Origin</label>
-            <input type='text'></input>
-            <br></br>
-            <label>Destination</label>
-            <input type='text'></input>
-            <br></br>
-            <label>Departure date</label>
-            <input type='date'></input>
-            <br></br>
-            <button>Search</button>
+            <span className='section-title'>Search menu</span>
+
+            <label className='small'>Origin</label>
+            <input type='text' value={origin} onChange={e => setOrigin(e.target.value)}></input>
+
+            <label className='small'>Destination</label>
+            <input type='text' value={destination} onChange={e => setDestination(e.target.value)}></input>
+
+            <label className='small'>Departure date</label>
+            <input type='date' value={date} onChange={e => setDate(e.target.value)}></input>   
+
+            <button className='button' onClick={onSubmit}>Search</button>
         </div>
     );
 }
@@ -38,8 +50,7 @@ function SearchMenu() {
 function SearchResults() {
     return (
         <>
-            <span>Available seats</span>
-            <br></br>
+            <span className='section-title'>Available seats</span>
             <div className='tickets'>
                 <div className='item'>ticket description 1</div>
                 <div className='item'>ticket description 2</div>
@@ -50,14 +61,7 @@ function SearchResults() {
     );
 }
 
-function Navigation() {
-    return (
-        <div className='controls'>
-            <button>prev</button>
-            <button>next</button>
-        </div>
-    );
-}
+
 
 /*
 search menu
