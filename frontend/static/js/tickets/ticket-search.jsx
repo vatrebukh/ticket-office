@@ -3,11 +3,9 @@ import { useState } from 'react';
 import { Navigation, Steps} from './steps';
 import { busTickets } from './data';
 
-export default function TicketSearchPage() {
-    const [filteredTickets, setFilteredTickets] = useState([]);
-
-    function markSelected(ticketId) {   
-        setFilteredTickets(filteredTickets.map(ticket => {   
+export default function TicketSearchPage({pageSetter, tickets, setTickets}) {
+    function markSelectedTicket(ticketId) {   
+        setTickets(tickets.map(ticket => {   
             if (ticket.id === ticketId) {
                 return {...ticket, selected: !ticket.selected}
             } else {
@@ -18,10 +16,10 @@ export default function TicketSearchPage() {
 
     return (
         <div className="page">
-            <SearchMenu searchHandler={setFilteredTickets} />
-            <div className="main">
-                <SearchResults tickets={filteredTickets} handleClick={markSelected} />
-                <Navigation />
+            <SearchMenu searchHandler={setTickets} />
+            <div className="search-page">
+                <SearchResults tickets={tickets} handleClick={markSelectedTicket} />
+                <Navigation onPrev={() => pageSetter(0)} onNext={() => pageSetter(2)}/>
                 <Steps active="1" />
             </div>
         </div>
@@ -36,7 +34,9 @@ function SearchMenu({searchHandler}) {
     const [date, setDate] = useState(today);
 
     function doSearch() {
-        searchHandler(busTickets.filter(ticket => ticket.origin === origin && ticket.destination === destination));
+        searchHandler(
+            busTickets.filter(ticket => containsString(ticket.origin, origin) && containsString(ticket.destination, destination))
+        );
         clearFields();
     }
 
@@ -65,7 +65,6 @@ function SearchMenu({searchHandler}) {
 }
 
 function SearchResults({tickets, handleClick}) {
-
     return (
         <>
             <span className='section-title'>Available seats</span>
@@ -102,6 +101,10 @@ function calcTimeDifference(time1, time2) {
     let hours = Math.floor((time2Minutes - time1Minutes) / 60);
     let minutes = (time2Minutes - time1Minutes) % 60;
     return `${hours} hrs ${minutes.toString().padStart(2, '0')} min`;
+}
+
+function containsString(string, substring) {
+    return string.toLowerCase().includes(substring.toLowerCase());
 }
 
 

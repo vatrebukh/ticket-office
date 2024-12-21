@@ -14,11 +14,31 @@ export function Steps({active}) {
     );
 }
 
-export function Navigation() {
+export function Navigation({onPrev, onNext}) {
     return (
         <div className='controls'>
-            <button>prev</button>
-            <button>next</button>
+            <div>
+                <button onClick={onPrev} >prev</button>
+                <button onClick={onNext} >next</button>
+            </div>
+        </div>
+    );
+}
+
+export function LabeledInput1({label, value, onChange}) {
+    return (
+        <div className='labeled'>
+            <label className='small'>{label}</label>
+            <input type='text' value={value} onChange={onChange}></input>
+        </div>
+    );
+}
+
+export function LabeledBox({label, value, onChange}) {
+    return (
+        <div className='labeled'>
+            <label className='small'>{label}</label>
+            <input type='checkbox' value={value} onChange={onChange}></input>
         </div>
     );
 }

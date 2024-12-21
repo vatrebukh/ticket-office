@@ -2,13 +2,13 @@ import { Router } from "./router.js";
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import HomePage from "./home.jsx";
-import TicketSearchPage from "./tickets/ticket-search.jsx"
+import TicketMainPage from "./tickets/ticket-main.jsx"
 
 const root = createRoot(document.getElementById('root'));
 
 const routes = [
     { path: '/', view: () => root.render(<HomePage/>) },
-    { path: '/tickets', view: () => root.render(<TicketSearchPage/>) },
+    { path: '/tickets', view: () => root.render(<TicketMainPage/>) },
     { path: '/payment', view: () => root.render(<PaymentPage/>) },
 ];
 

@@ -135,7 +135,7 @@ html {
 
 /* Search results */
 
-.main {
+.search-page, .passengers-page {
     position: absolute;
     left: 15rem;
     bottom: 0;
@@ -144,10 +144,10 @@ html {
     height: 100%;
 }
 
-.tickets {
+.tickets, .passengers {
     display: flex;
     flex-flow: column nowrap;
-    max-height: calc(100% - 8.5rem);
+    max-height: calc(100% - 9.0rem);
     overflow-y: auto;
 }
 
@@ -179,8 +179,39 @@ html {
 }
 
 
+.passenger {
+    display: flex;
+}
+
+.labeled {
+    display: inline-block;
+    margin: 0.8rem;
+    text-align: left;
+}
+
+.labeled input {
+    display: block;
+    min-width: 12rem;
+    padding: 0.3rem;
+}
+
+.labeled input[type='checkbox'] {
+    min-width: 2.5rem;
+    margin: 0.2rem 0;
+    width: 1.1rem;
+    height: 1.1rem;
+    transform: translate(-0.6rem, 0);
+}
+
+
 /* Control buttons */
 .controls {
+    position: absolute;
+    bottom: 3rem;
+    width: calc(100% - 2rem);
+}
+
+.controls > div {
     padding: 1.5rem 0;
     display: flex;
     justify-content: space-between;
