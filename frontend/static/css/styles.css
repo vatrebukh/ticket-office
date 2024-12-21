@@ -108,17 +108,21 @@ html {
     margin: 1rem 0;
     padding: 0.5rem;
     width: 100%;
-    background-color: #cfc8c3;
-    border: #d4b9a7 2px solid;
+    max-width: 12rem;
+    background-color: #ca7f49;
+    border: #cfc8c3 2px solid;
+    border-radius: 5px;
+    font-weight: 700;
+    cursor: pointer;
 }
 
 .button:hover {
-    border-color: #cfc8c3
+    border-color: #ca7f49
 }
 
 .button:active {
     background-color: #ca7f49;
-    border-color: #ca7f49;
+    border-color: #cfc8c3;
 }
 
 .small {
@@ -135,7 +139,7 @@ html {
 
 /* Search results */
 
-.search-page, .passengers-page, .confirmation-page {
+.search-page, .passengers-page, .confirmation-page, .payment-page {
     position: absolute;
     left: 15rem;
     bottom: 0;
@@ -144,7 +148,7 @@ html {
     height: 100%;
 }
 
-.tickets, .passengers {
+.tickets, .passengers, .payment {
     display: flex;
     flex-flow: column nowrap;
     max-height: calc(100% - 9.0rem);
@@ -154,7 +158,7 @@ html {
 .ticket {
     padding: 10px 5px;
     margin: 5px 0;
-    background-color: #d4b9a7;;
+    background-color: #d4b9a7;
 }
 
 .selected {
@@ -178,6 +182,9 @@ html {
     font-weight: 600;
 }
 
+.hidden {
+    display: none;
+}
 
 .passenger {
     display: flex;
@@ -222,6 +229,65 @@ html {
     padding: 5px;
 }
 
+
+/*Payment*/
+
+.payment-methods {
+    display: flex;
+    justify-content: center;
+    margin: 4rem 0;
+}
+
+.payment-method {
+    position: relative;
+    margin: 0 20px;
+}
+
+.payment-method input[type="radio"] {
+    display: none;
+}
+
+.payment-method label {
+    padding: 0.5rem 4rem;
+    border: 2px solid #d4b9a7;
+    border-radius: 5px;
+    background-color: white;
+    cursor: pointer;
+    text-align: center;
+    font-weight: bold;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.payment-method input[type="radio"]:checked + label {
+    background-color: #d4b9a7;
+}
+
+.payment-method label:hover {
+    background-color: #cce6f4;
+}
+
+.payment-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.payment-cash {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.payment-card {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
 
 /* Path line container */
 .steps {

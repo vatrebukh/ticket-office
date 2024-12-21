@@ -3,6 +3,7 @@ import { useState } from 'react';
 import TicketSearchPage from './ticket-search';
 import PassengerInfo from './passenger-info';
 import TicketConfirmation from './ticket-confirmation';
+import TicketPayment from './ticket-payment';
 
 export default function TicketMainPage() {
     const [step, setStep] = useState(1);
@@ -29,14 +30,19 @@ export default function TicketMainPage() {
                 passengers={passengers} 
                 setPassengers={setPassengers} />
         );
-    } else if (step === 3) {
-        let ticket = tickets.find(ticket => ticket.selected);
-        
+    } else if (step === 3) {       
         return (
             <TicketConfirmation 
                 pageSetter={handleSetStep} 
                 passengers={passengers} 
-                ticket={ticket} />
+                ticket={tickets.find(ticket => ticket.selected)} />
+        );
+    } else if (step === 4) {
+        let totalPrice = passengers.map(p => p.child ? 0.5 : 1.0).reduce((a, b) => a + b, 0) * tickets.find(ticket => ticket.selected).price;
+        return (
+            <TicketPayment 
+                pageSetter={handleSetStep}
+                totalPrice={totalPrice} />
         );
     }
 }
