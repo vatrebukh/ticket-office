@@ -93,7 +93,7 @@ function TicketDetails({ticket, markSelected}) {
     );
 }
 
-function calcTimeDifference(time1, time2) {
+export function calcTimeDifference(time1, time2) {
     let time1Parts = time1.split(':');
     let time2Parts = time2.split(':');
     let time1Minutes = parseInt(time1Parts[0]) * 60 + parseInt(time1Parts[1]);

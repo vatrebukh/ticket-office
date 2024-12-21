@@ -2,6 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import TicketSearchPage from './ticket-search';
 import PassengerInfo from './passenger-info';
+import TicketConfirmation from './ticket-confirmation';
 
 export default function TicketMainPage() {
     const [step, setStep] = useState(1);
@@ -16,7 +17,10 @@ export default function TicketMainPage() {
     
     if (step === 1) {
         return (
-            <TicketSearchPage pageSetter={handleSetStep} tickets={tickets} setTickets={setTickets} />
+            <TicketSearchPage 
+                pageSetter={handleSetStep} 
+                tickets={tickets} 
+                setTickets={setTickets} />
         );
     } else if (step === 2) {
         return (
@@ -24,6 +28,15 @@ export default function TicketMainPage() {
                 pageSetter={handleSetStep} 
                 passengers={passengers} 
                 setPassengers={setPassengers} />
+        );
+    } else if (step === 3) {
+        let ticket = tickets.find(ticket => ticket.selected);
+        
+        return (
+            <TicketConfirmation 
+                pageSetter={handleSetStep} 
+                passengers={passengers} 
+                ticket={ticket} />
         );
     }
 }

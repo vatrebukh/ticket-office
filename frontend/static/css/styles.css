@@ -135,7 +135,7 @@ html {
 
 /* Search results */
 
-.search-page, .passengers-page {
+.search-page, .passengers-page, .confirmation-page {
     position: absolute;
     left: 15rem;
     bottom: 0;
