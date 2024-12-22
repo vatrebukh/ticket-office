@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import { Navigation, Steps} from './steps';
+import { LabeledInput2, Navigation} from './steps';
 import { busTickets } from './data';
 
 export default function TicketSearchPage({pageSetter, tickets, setTickets}) {
@@ -18,9 +18,13 @@ export default function TicketSearchPage({pageSetter, tickets, setTickets}) {
         <div className="page">
             <SearchMenu searchHandler={setTickets} />
             <div className="search-page">
-                <SearchResults tickets={tickets} handleClick={markSelectedTicket} />
-                <Navigation onPrev={() => pageSetter(0)} onNext={() => pageSetter(2)}/>
-                <Steps active="1" />
+                <SearchResults 
+                    tickets={tickets} 
+                    handleClick={markSelectedTicket} />
+                <Navigation 
+                    step={1} 
+                    onPrev={pageSetter}
+                    onNext={pageSetter} />
             </div>
         </div>
     );
@@ -32,8 +36,15 @@ function SearchMenu({searchHandler}) {
     const [origin, setOrigin] = useState('');
     const [destination, setDestination] = useState('');
     const [date, setDate] = useState(today);
+    const [errOrigin, setErrOrigin] = useState('');
+    const [errDestination, setErrDestination] = useState('');
 
     function doSearch() {
+        let hasErrors = validateInputs(origin, destination, setErrOrigin, setErrDestination);
+        if (hasErrors) {
+            return;
+        }
+
         searchHandler(
             busTickets.filter(ticket => containsString(ticket.origin, origin) && containsString(ticket.destination, destination))
         );
@@ -50,11 +61,10 @@ function SearchMenu({searchHandler}) {
         <div className='search-menu'>
             <span className='section-title'>Search menu</span>
 
-            <label className='small'>Origin</label>
-            <input type='text' value={origin} onChange={e => setOrigin(e.target.value)}></input>
-
-            <label className='small'>Destination</label>
-            <input type='text' value={destination} onChange={e => setDestination(e.target.value)}></input>
+            <LabeledInput2 label='Origin' value={origin} error={errOrigin} 
+                           onChange={e => setOrigin(e.target.value)} />
+            <LabeledInput2 label='Destination' value={destination} error={errDestination} 
+                           onChange={e => setDestination(e.target.value)} />
 
             <label className='small'>Departure date</label>
             <input type='date' value={date} onChange={e => setDate(e.target.value)}></input>   
@@ -62,6 +72,23 @@ function SearchMenu({searchHandler}) {
             <button className='button' onClick={doSearch}>Search</button>
         </div>
     );
+}
+
+function validateInputs(origin, destination, setErrOrigin, setErrDestination) {
+    let hasErrors = false;
+    if (origin.length < 3) {
+        setErrOrigin('Min 3 characters');
+        hasErrors = true;
+    } else {
+        setErrOrigin('');
+    }
+    if (destination.length < 3) {
+        setErrDestination('Min 3 characters');
+        hasErrors = true;
+    } else {
+        setErrDestination('');
+    }
+    return hasErrors;
 }
 
 function SearchResults({tickets, handleClick}) {

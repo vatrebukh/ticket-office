@@ -1,11 +1,28 @@
 import React from 'react';
 import { useState } from 'react';
-import { Navigation, Steps, LabeledInput1} from './steps';
+import { Navigation, LabeledInput1 } from './steps';
 
 export default function TicketPayment({pageSetter, totalPrice}) {
 
     const [cashHidden, setCashHidden] = useState(true);
     const [cardHidden, setCardHidden] = useState(true);
+    const [paymentCompleted, setPaymentCompleted] = useState(false);
+
+    if (paymentCompleted) {
+        return (
+            <div className="page">
+            <div className="payment-page">
+                <div className="payment">
+                    <span className="section-title">Thank you</span>
+                </div>
+                <Navigation 
+                    step={4} 
+                    onPrev={pageSetter}
+                    onNext={pageSetter} />
+            </div>
+        </div>
+        );
+    }
 
     function showCashDetails() {
         setCashHidden(false);    
@@ -28,12 +45,14 @@ export default function TicketPayment({pageSetter, totalPrice}) {
                     </div>
                     <div className="payment-details">
                         <div>{totalPrice} USD</div>
-                        <CashPayment cashHidden={cashHidden} />
-                        <CardPayment cardHidden={cardHidden} />
+                        <CashPayment cashHidden={cashHidden} setPaymentCompleted={setPaymentCompleted} />
+                        <CardPayment cardHidden={cardHidden} setPaymentCompleted={setPaymentCompleted} />
                     </div>
                 </div>
-                <Navigation onPrev={() => pageSetter(3)} onNext={() => pageSetter(5)}/>
-                <Steps active={4} />
+                <Navigation 
+                    step={4} 
+                    onPrev={pageSetter}
+                    onNext={pageSetter} />
             </div>
         </div>
     );
@@ -48,10 +67,11 @@ function PaymentMethod({method, handleClick}) {
     );
 }
 
-function CashPayment({cashHidden}) {
+function CashPayment({cashHidden, setPaymentCompleted}) {
 
     function complete() {
         console.log('Ticket reservation completed');
+        setPaymentCompleted(true);
     }
 
     return (
@@ -61,21 +81,43 @@ function CashPayment({cashHidden}) {
     );
 }
 
-function CardPayment({cardHidden}) {
+function CardPayment({cardHidden, setPaymentCompleted}) {
     const [cardNumber, setCardNumber] = useState('');
     const [cardHolder, setCardHolder] = useState('');
+    const [cardError, setCardError] = useState({"cardNumber": "", "cardHolder": ""});
 
     function completePayment() {
-        console.log(`Ticket payment completed. Card ${cardNumber}, holder: ${cardHolder}`);
-        setCardNumber('');
-        setCardHolder('');
+        let hasError = validateCard(cardNumber, cardHolder, setCardError);
+        if (!hasError) {
+            setCardNumber('');
+            setCardHolder('');
+            console.log(`Ticket payment completed. Card ${cardNumber}, holder: ${cardHolder}`);
+            setPaymentCompleted(true);
+        }
     }
 
     return (
         <div className={cardHidden ? 'hidden' : 'payment-card'}>
-            <LabeledInput1 label="Card number" value={cardNumber} onChange={e => setCardNumber(e.target.value)} />
-            <LabeledInput1 label="Card holder" value={cardHolder} onChange={e => setCardHolder(e.target.value)} />
+            <LabeledInput1 
+                label="Card number" 
+                value={cardNumber} 
+                error={cardError.cardNumber}
+                onChange={e => setCardNumber(e.target.value)} />
+            <LabeledInput1 
+                label="Card holder" 
+                value={cardHolder} 
+                error={cardError.cardHolder}
+                onChange={e => setCardHolder(e.target.value)} />
             <button className='button' onClick={completePayment}>Complete payment</button>
         </div>
     );
+}
+
+function validateCard(cardNumber, cardHolder, setCardError) {
+    let cardNumberError = cardNumber.length !== 16 ? "Card number is not valid" : "";
+    let cardHolderError = cardHolder.length < 3 ? "Min 3 characters required" : "";
+
+    setCardError({"cardNumber": cardNumberError, "cardHolder": cardHolderError});
+    
+    return cardNumberError || cardHolderError;
 }

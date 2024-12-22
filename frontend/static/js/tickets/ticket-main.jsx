@@ -11,7 +11,16 @@ export default function TicketMainPage() {
     const [passengers, setPassengers] = useState([{"firstName": "", "lastName": "", "child": false}]);
 
     function handleSetStep(step) {
-        if (step >= 1 && step <= 4) {
+        if (step < 1 || step > 4) {
+            return
+        }
+        if (step === 2) {
+            let isTicketSelected = tickets.find(ticket => ticket.selected);
+            setStep(isTicketSelected ? step : step - 1); //TODO: set error in context instead
+        } else if (step === 3) {
+            let errors = validatePassengers(passengers);
+            setStep(errors ? step - 1 : step); //TODO: set error in context instead
+        } else {
             setStep(step);
         }
     }
@@ -45,4 +54,15 @@ export default function TicketMainPage() {
                 totalPrice={totalPrice} />
         );
     }
+}
+
+function validatePassengers(passengers) {
+    let hasErrors = false;
+    passengers.forEach(passenger => {
+        if (!passenger.firstName || !passenger.lastName) {
+            console.log('All passengers must have first and last name');
+            hasErrors = true;
+        }
+    })
+    return hasErrors;
 }

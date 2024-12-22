@@ -102,7 +102,7 @@ html {
     text-align: center;
 }
 
-.search-menu input {
+.search-menu input[type="date"] {
     display: block;
     border-color: $bkg_light;
     margin-bottom: 0.8rem;
@@ -215,6 +215,21 @@ html {
     transform: translate(-0.6rem, 0);
 }
 
+.labeled-2 {
+    border-color: $bkg_light;
+    margin-bottom: 0.8rem;
+}
+
+.labeled-2 input {
+    display: block;
+    border-color: $bkg_light;
+    padding: 0.3rem;
+    margin-bottom: 0;
+}
+
+.error {
+    color: red;
+}
 
 /* Control buttons */
 .controls {

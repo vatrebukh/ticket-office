@@ -1,6 +1,20 @@
 import React from 'react';
 
-export function Steps({active}) {
+export function Navigation({step, onPrev, onNext}) {
+    return (
+        <>
+            <div className='controls'>
+                <div>
+                    <button onClick={() => onPrev(step - 1)} >prev</button>
+                    <button onClick={() => onNext(step + 1)} >next</button>
+                </div>
+            </div>
+            < Steps active={step} />
+        </>
+    );
+}
+
+function Steps({active}) {
     return (
         <div className="steps">
             <div className={active == 1 ? 'step cur-step' : 'step'}>1</div>
@@ -14,22 +28,22 @@ export function Steps({active}) {
     );
 }
 
-export function Navigation({onPrev, onNext}) {
-    return (
-        <div className='controls'>
-            <div>
-                <button onClick={onPrev} >prev</button>
-                <button onClick={onNext} >next</button>
-            </div>
-        </div>
-    );
-}
-
-export function LabeledInput1({label, value, onChange}) {
+export function LabeledInput1({label, value, error, onChange}) {
     return (
         <div className='labeled'>
             <label className='small'>{label}</label>
             <input type='text' value={value} onChange={onChange}></input>
+            <label className={error ? 'small error' : ''}>{error}</label>
+        </div>
+    );
+}
+
+export function LabeledInput2({label, value, error, onChange}) {
+    return (
+        <div className='labeled-2'>
+            <label className='small'>{label}</label>
+            <input type='text' value={value} onChange={onChange}></input>
+            <label className={error ? 'small error' : ''}>{error}</label>
         </div>
     );
 }
@@ -38,7 +52,7 @@ export function LabeledBox({label, value, onChange}) {
     return (
         <div className='labeled'>
             <label className='small'>{label}</label>
-            <input type='checkbox' value={value} onChange={onChange}></input>
+            <input type='checkbox' checked={value} onChange={onChange}></input>
         </div>
     );
 }
