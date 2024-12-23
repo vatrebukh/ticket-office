@@ -38,16 +38,27 @@ function SearchMenu({searchHandler}) {
     const [date, setDate] = useState(today);
     const [errOrigin, setErrOrigin] = useState('');
     const [errDestination, setErrDestination] = useState('');
+    const [searchEnabled, setSearchEnabled] = useState(true);
 
-    function doSearch() {
+    async function doSearch(e) {
+        e.preventDefault();
+        setSearchEnabled(false);
         let hasErrors = validateInputs(origin, destination, setErrOrigin, setErrDestination);
         if (hasErrors) {
+            setSearchEnabled(true);
             return;
         }
 
-        searchHandler(
-            busTickets.filter(ticket => containsString(ticket.origin, origin) && containsString(ticket.destination, destination))
-        );
+        try {
+            let tickets = await searchTickets(origin, destination);
+            //TODO: display message if no tickets
+            searchHandler(tickets);
+            setSearchEnabled(true);
+        } catch (error) {
+            console.log(error);
+            setSearchEnabled(true);
+        }
+
         clearFields();
     }
 
@@ -69,7 +80,7 @@ function SearchMenu({searchHandler}) {
             <label className='small'>Departure date</label>
             <input type='date' value={date} onChange={e => setDate(e.target.value)}></input>   
 
-            <button className='button' onClick={doSearch}>Search</button>
+            <button className='button' disabled={!searchEnabled} onClick={e => doSearch(e)}>Search</button>
         </div>
     );
 }
@@ -89,6 +100,15 @@ function validateInputs(origin, destination, setErrOrigin, setErrDestination) {
         setErrDestination('');
     }
     return hasErrors;
+}
+
+function searchTickets(origin, destination) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            let res = busTickets.filter(ticket => containsString(ticket.origin, origin) && containsString(ticket.destination, destination))
+            resolve(res);
+        }, 2000);
+    });
 }
 
 function SearchResults({tickets, handleClick}) {
