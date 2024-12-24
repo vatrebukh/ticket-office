@@ -2,7 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import { Navigation, LabeledInput1 } from './steps';
 
-export default function TicketPayment({pageSetter, totalPrice}) {
+export default function TicketPayment({totalPrice}) {
 
     const [cashHidden, setCashHidden] = useState(true);
     const [cardHidden, setCardHidden] = useState(true);
@@ -15,10 +15,7 @@ export default function TicketPayment({pageSetter, totalPrice}) {
                 <div className="payment">
                     <span className="section-title">Thank you</span>
                 </div>
-                <Navigation 
-                    step={4} 
-                    onPrev={pageSetter}
-                    onNext={pageSetter} />
+                <Navigation step={4}  />
             </div>
         </div>
         );
@@ -49,10 +46,7 @@ export default function TicketPayment({pageSetter, totalPrice}) {
                         <CardPayment cardHidden={cardHidden} setPaymentCompleted={setPaymentCompleted} />
                     </div>
                 </div>
-                <Navigation 
-                    step={4} 
-                    onPrev={pageSetter}
-                    onNext={pageSetter} />
+                <Navigation step={4} />
             </div>
         </div>
     );
@@ -118,6 +112,6 @@ function validateCard(cardNumber, cardHolder, setCardError) {
     let cardHolderError = cardHolder.length < 3 ? "Min 3 characters required" : "";
 
     setCardError({"cardNumber": cardNumberError, "cardHolder": cardHolderError});
-    
+
     return cardNumberError || cardHolderError;
 }

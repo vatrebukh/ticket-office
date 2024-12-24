@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navigation, LabeledInput1, LabeledBox} from './steps';
 
-export default function PassengerInfo({pageSetter, passengers, setPassengers}) {
+export default function PassengerInfo({passengers, setPassengers}) {
 
     return (
         <div className="page">
@@ -9,10 +9,7 @@ export default function PassengerInfo({pageSetter, passengers, setPassengers}) {
                 <Passengers 
                     passengers={passengers} 
                     setPassengers={setPassengers} />
-                <Navigation 
-                    step={2} 
-                    onPrev={pageSetter}
-                    onNext={pageSetter} />
+                <Navigation step={2}  />
             </div>
         </div>
     );

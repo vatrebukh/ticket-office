@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navigation } from './steps';
 
-export default function TicketConfirmation({ticket, passengers, pageSetter}) {
+export default function TicketConfirmation({ticket, passengers}) {
     return (
         <div className="page">
             <TicketInfo 
@@ -19,10 +19,7 @@ export default function TicketConfirmation({ticket, passengers, pageSetter}) {
                     <span className='strong' >{passengers.map(p => p.child ? 0.5 : 1.0).reduce((a, b) => a + b, 0) * ticket.price}</span>
                     <span className='strong' > USD</span>
                 </div>
-                <Navigation 
-                    step={3} 
-                    onPrev={pageSetter}
-                    onNext={pageSetter} />
+                <Navigation step={3} />
             </div>
         </div>
     );

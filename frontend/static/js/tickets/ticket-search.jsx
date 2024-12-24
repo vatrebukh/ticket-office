@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { LabeledInput2, Navigation} from './steps';
 import { busTickets } from './data';
 
-export default function TicketSearchPage({pageSetter, tickets, setTickets}) {
+export default function TicketSearchPage({tickets, setTickets}) {
     function markSelectedTicket(ticketId) {   
         setTickets(tickets.map(ticket => {   
             if (ticket.id === ticketId) {
@@ -21,10 +21,7 @@ export default function TicketSearchPage({pageSetter, tickets, setTickets}) {
                 <SearchResults 
                     tickets={tickets} 
                     handleClick={markSelectedTicket} />
-                <Navigation 
-                    step={1} 
-                    onPrev={pageSetter}
-                    onNext={pageSetter} />
+                <Navigation step={1} />
             </div>
         </div>
     );

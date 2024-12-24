@@ -1,12 +1,16 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import { StepContext } from './StepContext';
 
 export function Navigation({step, onPrev, onNext}) {
+
+    const stepHandler = useContext(StepContext);
+
     return (
         <>
             <div className='controls'>
                 <div>
-                    <button onClick={() => onPrev(step - 1)} >prev</button>
-                    <button onClick={() => onNext(step + 1)} >next</button>
+                    <button onClick={() => stepHandler(step - 1)} >prev</button>
+                    <button onClick={() => stepHandler(step + 1)} >next</button>
                 </div>
             </div>
             < Steps active={step} />

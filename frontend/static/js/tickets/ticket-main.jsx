@@ -4,15 +4,16 @@ import TicketSearchPage from './ticket-search';
 import PassengerInfo from './passenger-info';
 import TicketConfirmation from './ticket-confirmation';
 import TicketPayment from './ticket-payment';
+import { StepContext } from './StepContext';
 
 export default function TicketMainPage() {
     const [step, setStep] = useState(1);
     const [tickets, setTickets] = useState([]);
     const [passengers, setPassengers] = useState([{"firstName": "", "lastName": "", "child": false}]);
 
-    function handleSetStep(step) {
+    function handleStep(step) {
         if (step < 1 || step > 4) {
-            return
+            return;
         }
         if (step === 2) {
             let isTicketSelected = tickets.find(ticket => ticket.selected);
@@ -27,31 +28,35 @@ export default function TicketMainPage() {
     
     if (step === 1) {
         return (
-            <TicketSearchPage 
-                pageSetter={handleSetStep} 
-                tickets={tickets} 
-                setTickets={setTickets} />
+            <StepContext.Provider value={handleStep}>
+                <TicketSearchPage 
+                    tickets={tickets} 
+                    setTickets={setTickets} />
+            </StepContext.Provider >
         );
     } else if (step === 2) {
         return (
-            <PassengerInfo 
-                pageSetter={handleSetStep} 
-                passengers={passengers} 
-                setPassengers={setPassengers} />
+            <StepContext.Provider value={handleStep}>
+                <PassengerInfo 
+                    passengers={passengers} 
+                    setPassengers={setPassengers} />
+            </StepContext.Provider>
         );
     } else if (step === 3) {       
         return (
-            <TicketConfirmation 
-                pageSetter={handleSetStep} 
-                passengers={passengers} 
-                ticket={tickets.find(ticket => ticket.selected)} />
+            <StepContext.Provider value={handleStep}>
+                <TicketConfirmation 
+                    passengers={passengers} 
+                    ticket={tickets.find(ticket => ticket.selected)} />
+            </StepContext.Provider>
         );
     } else if (step === 4) {
         let totalPrice = passengers.map(p => p.child ? 0.5 : 1.0).reduce((a, b) => a + b, 0) * tickets.find(ticket => ticket.selected).price;
         return (
-            <TicketPayment 
-                pageSetter={handleSetStep}
-                totalPrice={totalPrice} />
+            <StepContext.Provider value={handleStep}>
+                <TicketPayment 
+                    totalPrice={totalPrice} />
+            </StepContext.Provider>
         );
     }
 }
