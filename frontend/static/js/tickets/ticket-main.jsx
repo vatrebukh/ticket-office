@@ -19,8 +19,8 @@ export default function TicketMainPage() {
             let isTicketSelected = tickets.find(ticket => ticket.selected);
             setStep(isTicketSelected ? step : step - 1); //TODO: set error in context instead
         } else if (step === 3) {
-            let errors = validatePassengers(passengers);
-            setStep(errors ? step - 1 : step); //TODO: set error in context instead
+            let hasErrors = validatePassengers(passengers, setPassengers);
+            setStep(hasErrors ? step - 1 : step);
         } else {
             setStep(step);
         }
@@ -61,13 +61,20 @@ export default function TicketMainPage() {
     }
 }
 
-function validatePassengers(passengers) {
+function validatePassengers(passengers, setPassengers) {
     let hasErrors = false;
-    passengers.forEach(passenger => {
-        if (!passenger.firstName || !passenger.lastName) {
-            console.log('All passengers must have first and last name');
+    let validated = passengers.map(passenger => {
+        let [fne, lne] = '';
+        if (!passenger.firstName) {
+            fne = 'First name is required';
             hasErrors = true;
         }
-    })
+        if (!passenger.lastName) {
+            lne = 'Last name is required';
+            hasErrors = true;
+        }
+        return {...passenger, firstNameError: fne, lastNameError: lne}
+    });
+    setPassengers(validated);
     return hasErrors;
 }

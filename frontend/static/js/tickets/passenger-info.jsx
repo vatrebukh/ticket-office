@@ -62,12 +62,12 @@ function Passenger({passenger, handleFirstName, handleLastName, handleChild}) {
             <LabeledInput1 
                 label='First Name' 
                 value={passenger.firstName} 
-                error=''
+                error={passenger.firstNameError}
                 onChange={e => handleFirstName(e.target.value)} />
             <LabeledInput1 
                 label='Last Name' 
                 value={passenger.lastName} 
-                error=''
+                error={passenger.lastNameError}
                 onChange={e => handleLastName(e.target.value)} />
             <LabeledBox 
                 label='Is child' 
