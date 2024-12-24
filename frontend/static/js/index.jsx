@@ -8,8 +8,9 @@ const root = createRoot(document.getElementById('root'));
 
 const routes = [
     { path: '/', view: () => root.render(<HomePage/>) },
-    { path: '/tickets', view: () => root.render(<TicketMainPage/>) },
-    { path: '/payment', view: () => root.render(<PaymentPage/>) },
+    { path: '/tickets/bus', view: () => root.render(<TicketMainPage/>) },
+    { path: '/tickets/train', view: () => root.render(<TBDPage/>) },
+    { path: '/profile', view: () => root.render(<TBDPage/>) },
 ];
 
 const router = new Router(routes);
@@ -34,6 +35,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-function PaymentPage() {
-    return <h1>Get your money!</h1>;
+function TBDPage() {
+    return <h1>Page is under development</h1>;
 }

@@ -65,9 +65,6 @@ html {
 }
 
 .service a {
-    display: flex; 
-    justify-content: center;
-    align-items: center;
     width: 100%;
     height: 100%;
     text-decoration: none;
@@ -75,11 +72,19 @@ html {
     font-weight: bold;
     border-radius: 10px;
     font-size: 1.2rem;
+    padding: 1rem;
 }
 
 .service a:hover {
     cursor: pointer;
     background-color: $bkg_dark;
+}
+
+.service img {
+    margin: 10px 25px 5px 25px;
+    display: block;
+    height: 75%;
+    border-radius: 10px;
 }
 
 /* Search tickets */
