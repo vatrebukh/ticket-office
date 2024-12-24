@@ -32,11 +32,11 @@ function Steps({active}) {
     );
 }
 
-export function LabeledInput1({label, value, error, onChange}) {
+export function LabeledInput1({label, name, value, error, onChange}) {
     return (
         <div className='labeled'>
             <label className='small'>{label}</label>
-            <input type='text' value={value} onChange={onChange}></input>
+            <input type='text' name={name} value={value} onChange={onChange}></input>
             <label className={error ? 'small error' : ''}>{error}</label>
         </div>
     );
@@ -52,11 +52,11 @@ export function LabeledInput2({label, value, error, onChange}) {
     );
 }
 
-export function LabeledBox({label, value, onChange}) {
+export function LabeledBox({label, name, value, onChange}) {
     return (
         <div className='labeled'>
             <label className='small'>{label}</label>
-            <input type='checkbox' checked={value} onChange={onChange}></input>
+            <input type='checkbox' name={name} checked={value} onChange={onChange}></input>
         </div>
     );
 }

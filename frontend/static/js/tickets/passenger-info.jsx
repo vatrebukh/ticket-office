@@ -17,26 +17,10 @@ export default function PassengerInfo({passengers, setPassengers}) {
 
 function Passengers({passengers, setPassengers}) {
 
-    function setFirstName(index, firstName) {
+    function setField(index, target) {
         setPassengers(passengers.map((passenger, i) => {
             return i === index 
-                ? {...passenger, firstName: firstName}
-                : passenger;
-        }));
-    }
-
-    function setLastName(index, lastName) {
-        setPassengers(passengers.map((passenger, i) => {
-            return i === index
-                ? {...passenger, lastName: lastName}
-                : passenger;
-        }));
-    }
-
-    function setChild(index, child) {
-        setPassengers(passengers.map((passenger, i) => {
-            return i === index 
-                ? {...passenger, child: child} 
+                ? {...passenger, [target.name]: target.type === 'checkbox' ? target.checked : target.value}
                 : passenger;
         }));
     }
@@ -47,32 +31,33 @@ function Passengers({passengers, setPassengers}) {
             <div className='passengers'>
                 {passengers.map(
                     (passenger, index) => <Passenger passenger={passenger} key={index} 
-                                                     handleFirstName={(firstName) => setFirstName(index, firstName)} 
-                                                     handleLastName={(lastName) => setLastName(index, lastName)} 
-                                                     handleChild={(child) => setChild(index, child)} />
+                                                     onChange={e => setField(index, e.target)} />
                 )}
             </div>
         </>
     );
 }
 
-function Passenger({passenger, handleFirstName, handleLastName, handleChild}) {
+function Passenger({passenger, onChange}) {
     return (
         <div className='passenger'>
             <LabeledInput1 
                 label='First Name' 
+                name='firstName'
                 value={passenger.firstName} 
                 error={passenger.firstNameError}
-                onChange={e => handleFirstName(e.target.value)} />
+                onChange={onChange} />
             <LabeledInput1 
                 label='Last Name' 
+                name='lastName'
                 value={passenger.lastName} 
                 error={passenger.lastNameError}
-                onChange={e => handleLastName(e.target.value)} />
+                onChange={onChange} />
             <LabeledBox 
                 label='Is child' 
+                name='child'
                 value={passenger.child} 
-                onChange={e => handleChild(e.target.checked)} />
+                onChange={onChange} />
         </div>
     );
 }
