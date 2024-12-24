@@ -8,16 +8,18 @@ import { StepContext } from './StepContext';
 
 export default function TicketMainPage() {
     const [step, setStep] = useState(1);
-    const [tickets, setTickets] = useState([]);
+    const [tickets, setTickets] = useState(null);
     const [passengers, setPassengers] = useState([{"firstName": "", "lastName": "", "child": false}]);
+    const [checkTicketSelected, setCheckTicketSelected] = useState(false);
 
     function handleStep(step) {
         if (step < 1 || step > 4) {
             return;
         }
         if (step === 2) {
-            let isTicketSelected = tickets.find(ticket => ticket.selected);
-            setStep(isTicketSelected ? step : step - 1); //TODO: set error in context instead
+            let selectedTicket = tickets && tickets.find(ticket => ticket.selected);
+            setCheckTicketSelected(!selectedTicket);
+            setStep(selectedTicket ? step : step - 1);
         } else if (step === 3) {
             let hasErrors = validatePassengers(passengers, setPassengers);
             setStep(hasErrors ? step - 1 : step);
@@ -31,7 +33,9 @@ export default function TicketMainPage() {
             <StepContext.Provider value={handleStep}>
                 <TicketSearchPage 
                     tickets={tickets} 
-                    setTickets={setTickets} />
+                    setTickets={setTickets}
+                    checkTicketSelected={checkTicketSelected}
+                    setCheckTicketSelected={setCheckTicketSelected} />
             </StepContext.Provider >
         );
     } else if (step === 2) {

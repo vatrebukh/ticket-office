@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { LabeledInput2, Navigation} from './steps';
 import { busTickets } from './data';
 
-export default function TicketSearchPage({tickets, setTickets}) {
+export default function TicketSearchPage({tickets, setTickets, checkTicketSelected, setCheckTicketSelected}) {
     function markSelectedTicket(ticketId) {   
         setTickets(tickets.map(ticket => {   
             if (ticket.id === ticketId) {
@@ -16,11 +16,12 @@ export default function TicketSearchPage({tickets, setTickets}) {
 
     return (
         <div className="page">
-            <SearchMenu searchHandler={setTickets} />
+            <SearchMenu searchHandler={setTickets} setCheckTicketSelected={setCheckTicketSelected} />
             <div className="search-page">
                 <SearchResults 
                     tickets={tickets} 
-                    handleClick={markSelectedTicket} />
+                    handleClick={markSelectedTicket}
+                    checkTicketSelected={checkTicketSelected} />
                 <Navigation step={1} />
             </div>
         </div>
@@ -28,7 +29,7 @@ export default function TicketSearchPage({tickets, setTickets}) {
 }
 
 
-function SearchMenu({searchHandler}) {
+function SearchMenu({searchHandler, setCheckTicketSelected}) {
     const today = new Date().toISOString().split('T')[0];
     const emptySearchData = {"origin": "", "destination": "", "date": today, "originErr": "", "destinationErr": ""}
     const [searchData, setSearchData] = useState(emptySearchData);
@@ -45,14 +46,13 @@ function SearchMenu({searchHandler}) {
 
         try {
             let tickets = await searchTickets(searchData.origin, searchData.destination);
-            //TODO: display message if no tickets
             searchHandler(tickets);
             setSearchEnabled(true);
         } catch (error) {
             console.log(error);
             setSearchEnabled(true);
         }
-
+        setCheckTicketSelected(false);
         setSearchData(emptySearchData);
     }
 
@@ -97,12 +97,14 @@ function searchTickets(origin, destination) {
     });
 }
 
-function SearchResults({tickets, handleClick}) {
+function SearchResults({tickets, handleClick, checkTicketSelected}) {
     return (
         <>
             <span className='section-title'>Available seats</span>
+            { tickets && tickets.length === 0 ? <div className='notification-red'>No tickets found</div> : '' }
+            { checkTicketSelected ? <div className='notification-red'>Select ticket</div> : ''}
             <div className='tickets'>
-                {tickets.map(ticket => <TicketDetails ticket={ticket} key={ticket.id} markSelected={() => handleClick(ticket.id)}/>)}
+                {tickets && tickets.map(ticket => <TicketDetails ticket={ticket} key={ticket.id} markSelected={() => handleClick(ticket.id)}/>)}
             </div>
         </>
     );

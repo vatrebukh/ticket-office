@@ -13,9 +13,8 @@ export default function TicketPayment({totalPrice}) {
             <div className="page">
             <div className="payment-page">
                 <div className="payment">
-                    <span className="section-title">Thank you</span>
+                    <div className="notification-green">Thank you</div>
                 </div>
-                <Navigation step={4}  />
             </div>
         </div>
         );
