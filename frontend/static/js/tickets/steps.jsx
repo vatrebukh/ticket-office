@@ -42,7 +42,7 @@ export function LabeledInput2({label, value, error, onChange}) {
     return (
         <div className='labeled-2'>
             <label className='small'>{label}</label>
-            <input type='text' value={value} onChange={onChange}></input>
+            <input type='text' name={label.toLowerCase()} value={value} onChange={onChange}></input>
             <label className={error ? 'small error' : ''}>{error}</label>
         </div>
     );

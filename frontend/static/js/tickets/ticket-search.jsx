@@ -33,24 +33,21 @@ export default function TicketSearchPage({pageSetter, tickets, setTickets}) {
 
 function SearchMenu({searchHandler}) {
     const today = new Date().toISOString().split('T')[0];
-    const [origin, setOrigin] = useState('');
-    const [destination, setDestination] = useState('');
-    const [date, setDate] = useState(today);
-    const [errOrigin, setErrOrigin] = useState('');
-    const [errDestination, setErrDestination] = useState('');
+    const emptySearchData = {"origin": "", "destination": "", "date": today, "originErr": "", "destinationErr": ""}
+    const [searchData, setSearchData] = useState(emptySearchData);
     const [searchEnabled, setSearchEnabled] = useState(true);
 
     async function doSearch(e) {
         e.preventDefault();
         setSearchEnabled(false);
-        let hasErrors = validateInputs(origin, destination, setErrOrigin, setErrDestination);
+        let hasErrors = validateInputs(searchData, setSearchData);
         if (hasErrors) {
             setSearchEnabled(true);
             return;
         }
 
         try {
-            let tickets = await searchTickets(origin, destination);
+            let tickets = await searchTickets(searchData.origin, searchData.destination);
             //TODO: display message if no tickets
             searchHandler(tickets);
             setSearchEnabled(true);
@@ -59,47 +56,39 @@ function SearchMenu({searchHandler}) {
             setSearchEnabled(true);
         }
 
-        clearFields();
+        setSearchData(emptySearchData);
     }
 
-    function clearFields() {
-        setOrigin('');
-        setDestination('');
-        setDate(today);
-    }
+    const handleSearchInput = ({ name, value }) => {
+        setSearchData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
+    };
 
     return (
         <div className='search-menu'>
             <span className='section-title'>Search menu</span>
 
-            <LabeledInput2 label='Origin' value={origin} error={errOrigin} 
-                           onChange={e => setOrigin(e.target.value)} />
-            <LabeledInput2 label='Destination' value={destination} error={errDestination} 
-                           onChange={e => setDestination(e.target.value)} />
+            <LabeledInput2 label='Origin' value={searchData.origin} error={searchData.originErr} 
+                           onChange={e => handleSearchInput(e.target)} />
+            <LabeledInput2 label='Destination' value={searchData.destination} error={searchData.destinationErr} 
+                           onChange={e => handleSearchInput(e.target)} />
 
             <label className='small'>Departure date</label>
-            <input type='date' value={date} onChange={e => setDate(e.target.value)}></input>   
+            <input type='date' name = 'date' value={searchData.date} onChange={e => handleSearchInput(e.target)}></input>   
 
             <button className='button' disabled={!searchEnabled} onClick={e => doSearch(e)}>Search</button>
         </div>
     );
 }
 
-function validateInputs(origin, destination, setErrOrigin, setErrDestination) {
-    let hasErrors = false;
-    if (origin.length < 3) {
-        setErrOrigin('Min 3 characters');
-        hasErrors = true;
-    } else {
-        setErrOrigin('');
-    }
-    if (destination.length < 3) {
-        setErrDestination('Min 3 characters');
-        hasErrors = true;
-    } else {
-        setErrDestination('');
-    }
-    return hasErrors;
+function validateInputs(searchData, setSearchData) {
+    setSearchData({...searchData, 
+        originErr: searchData.origin.length < 3 ? 'Min 3 characters' : '',
+        destinationErr: searchData.destination.length < 3 ? 'Min 3 characters' : ''
+    });
+    return searchData.origin.length < 3 || searchData.destination.length < 3;
 }
 
 function searchTickets(origin, destination) {
@@ -107,7 +96,7 @@ function searchTickets(origin, destination) {
         setTimeout(() => {
             let res = busTickets.filter(ticket => containsString(ticket.origin, origin) && containsString(ticket.destination, destination))
             resolve(res);
-        }, 2000);
+        }, 1000);
     });
 }
 
