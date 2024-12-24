@@ -130,6 +130,12 @@ html {
     border-color: $bkg_main;
 }
 
+.button-add {
+    @extend .button;
+    background-color: $bkg_light;
+    margin-left: 0.8rem;
+}
+
 .small {
     font-size: 0.8rem;
 }
@@ -191,8 +197,21 @@ html {
     display: none;
 }
 
+.passengers {
+    min-width: 44rem;
+}
+
 .passenger {
     display: flex;
+}
+
+.delete-small {
+    width: 1.2rem;
+    height: 1.2rem;
+    padding: 0.2rem;
+    margin: 1.9rem 0 0 0.5rem;
+    text-decoration: none;
+    background-size: contain;
 }
 
 .labeled {

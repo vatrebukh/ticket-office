@@ -67,6 +67,9 @@ export default function TicketMainPage() {
 
 function validatePassengers(passengers, setPassengers) {
     let hasErrors = false;
+    if (passengers.length === 0) {
+        return true;
+    }
     let validated = passengers.map(passenger => {
         let [fne, lne] = '';
         if (!passenger.firstName) {
