@@ -71,7 +71,7 @@ function Passenger({passenger, onChange, onDelete, singlePassenger}) {
                 onChange={onChange} />
             { singlePassenger 
                 ? ''
-                : <span onClick={onDelete} ><img className='delete-small' src="/static/img/del.svg"></img></span>
+                : <span onClick={onDelete} ><img className='delete-small' src="/icon/del.svg"></img></span>
             }
         </div>
     );

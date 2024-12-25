@@ -87,6 +87,10 @@ html {
     border-radius: 10px;
 }
 
+a img, a span {
+    pointer-events: none;
+}
+
 /* Search tickets */
 
 .page div {
