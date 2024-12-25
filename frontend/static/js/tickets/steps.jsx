@@ -35,9 +35,9 @@ function Steps({active}) {
 export function LabeledInput1({label, name, value, error, onChange}) {
     return (
         <div className='labeled'>
-            <label className='small'>{label}</label>
+            <label htmlFor={name} className='small'>{label}</label>
             <input type='text' name={name} value={value} onChange={onChange}></input>
-            <label className={error ? 'small error' : ''}>{error}</label>
+            {error && <label className='small error'>{error}</label>}
         </div>
     );
 }
