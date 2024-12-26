@@ -4,7 +4,7 @@ import UserProfile from './profile/user-profile';
 
 export default function LoginForm() {   
     const [formData, setFormData] = useState({"login": "", "password": ""});
-    const [authorized, setAuthorized] = useState(false);
+    const [authorized, setAuthorized] = useState(true);
 
     const handleChange = (e) => {
         const { name, value } = e.target;

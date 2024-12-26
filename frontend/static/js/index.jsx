@@ -4,6 +4,7 @@ import { createRoot } from 'react-dom/client';
 import HomePage from "./home.jsx";
 import TicketMainPage from "./tickets/ticket-main.jsx"
 import LoginForm from "./login.jsx";
+import UserProfile from "./profile/user-profile.jsx";
 
 const root = createRoot(document.getElementById('root'));
 
@@ -11,7 +12,12 @@ const routes = [
     { path: '/', view: () => root.render(<HomePage/>) },
     { path: '/tickets/bus', view: () => root.render(<TicketMainPage/>) },
     { path: '/tickets/train', view: () => root.render(<TBDPage/>) },
-    { path: '/profile', view: () => root.render(<LoginForm/>) },
+    { path: '/profile', view: () => root.render(<LoginForm />) },
+    { path: '/profile/info', view: () => root.render(<UserProfile section='info'/>) },
+    { path: '/profile/active', view: () => root.render(<UserProfile section='active'/>) },
+    { path: '/profile/past', view: () => root.render(<UserProfile section='past'/>) },
+    { path: '/profile/favourite', view: () => root.render(<UserProfile section='favourite'/>) },
+    { path: '/logout', view: () => root.render(<HomePage/>) },
 ];
 
 const router = new Router(routes);
