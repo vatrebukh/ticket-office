@@ -3,6 +3,7 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import HomePage from "./home.jsx";
 import TicketMainPage from "./tickets/ticket-main.jsx"
+import LoginForm from "./login.jsx";
 
 const root = createRoot(document.getElementById('root'));
 
@@ -10,7 +11,7 @@ const routes = [
     { path: '/', view: () => root.render(<HomePage/>) },
     { path: '/tickets/bus', view: () => root.render(<TicketMainPage/>) },
     { path: '/tickets/train', view: () => root.render(<TBDPage/>) },
-    { path: '/profile', view: () => root.render(<TBDPage/>) },
+    { path: '/profile', view: () => root.render(<LoginForm/>) },
 ];
 
 const router = new Router(routes);

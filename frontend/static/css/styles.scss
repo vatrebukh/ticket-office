@@ -116,6 +116,7 @@ a img, a span {
     border-color: $bkg_light;
     margin-bottom: 0.8rem;
     padding: 0.3rem;
+    width: calc(100% - 1.2rem);
 }
 
 .button {
