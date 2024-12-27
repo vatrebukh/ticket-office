@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { LabeledInput2, Navigation} from './steps';
-import { busTickets } from './data';
+import { searchRoutes } from '../service/ticket-service';
 
 export default function TicketSearchPage({tickets, setTickets, checkTicketSelected, setCheckTicketSelected}) {
     function markSelectedTicket(ticketId) {   
@@ -45,7 +45,7 @@ function SearchMenu({searchHandler, setCheckTicketSelected}) {
         }
 
         try {
-            let tickets = await searchTickets(searchData.origin, searchData.destination);
+            let tickets = await searchRoutes(searchData.origin, searchData.destination);
             searchHandler(tickets);
             setSearchEnabled(true);
         } catch (error) {
@@ -86,15 +86,6 @@ function validateInputs(searchData, setSearchData) {
         destinationErr: searchData.destination.length < 3 ? 'Min 3 characters' : ''
     });
     return searchData.origin.length < 3 || searchData.destination.length < 3;
-}
-
-function searchTickets(origin, destination) {
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            let res = busTickets.filter(ticket => containsString(ticket.origin, origin) && containsString(ticket.destination, destination))
-            resolve(res);
-        }, 1000);
-    });
 }
 
 function SearchResults({tickets, handleClick, checkTicketSelected}) {
@@ -138,6 +129,3 @@ export function calcTimeDifference(time1, time2) {
     return `${hours} hrs ${minutes.toString().padStart(2, '0')} min`;
 }
 
-function containsString(string, substring) {
-    return string.toLowerCase().includes(substring.toLowerCase());
-}

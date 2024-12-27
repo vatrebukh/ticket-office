@@ -159,7 +159,7 @@ a img, a span {
 
 /* Search results */
 
-.search-page, .passengers-page, .confirmation-page, .payment-page {
+.search-page, .passengers-page, .confirmation-page, .payment-page, .profile-page {
     position: absolute;
     left: $side_width;
     bottom: 0;
@@ -414,4 +414,20 @@ a img, a span {
 span.active {
     font-weight: 600;
     background-color: #c84;
+}
+
+.profile-page table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.profile-page td, .profile-page th {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+
+.profile-page tr:hover {
+    background-color: #f5f5f5;
 }
