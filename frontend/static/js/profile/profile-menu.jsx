@@ -1,13 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-export default function ProfileMenu() {
+export default function ProfileMenu({menu, setMenu}) {
+
+    function activate(index) { 
+        let upd = menu.map((item, idx) => {
+            return {...item, active: index == idx } 
+        })
+        setMenu(upd);
+    }
+
     return (
         <div className="profile-menu">
-            <a href="/profile/info" data-link>My Info</a>
-            <a href="/profile/active" data-link>Active Tickets</a>
-            <a href="/profile/past" data-link>Historical Tickets</a>
-            <a href="/profile/favourite" data-link>Favourite Trips</a>
-            <a href="/logout" data-link>Logout</a>
+            {
+                menu.map((item, index) => {
+                    return <span key={index} className={item.active ? 'active' : ''} onClick={() => activate(index)} >{item.name}</span>
+                })
+            }
+            <a href='/logout' data-link>Logout</a>
         </div>
     );
 }

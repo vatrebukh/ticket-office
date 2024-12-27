@@ -13,10 +13,6 @@ const routes = [
     { path: '/tickets/bus', view: () => root.render(<TicketMainPage/>) },
     { path: '/tickets/train', view: () => root.render(<TBDPage/>) },
     { path: '/profile', view: () => root.render(<LoginForm />) },
-    { path: '/profile/info', view: () => root.render(<UserProfile section='info'/>) },
-    { path: '/profile/active', view: () => root.render(<UserProfile section='active'/>) },
-    { path: '/profile/past', view: () => root.render(<UserProfile section='past'/>) },
-    { path: '/profile/favourite', view: () => root.render(<UserProfile section='favourite'/>) },
     { path: '/logout', view: () => root.render(<HomePage/>) },
 ];
 
