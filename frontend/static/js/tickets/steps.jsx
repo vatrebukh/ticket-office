@@ -36,7 +36,7 @@ export function LabeledInput1({label, name, value, error, onChange}) {
     return (
         <div className='labeled'>
             <label htmlFor={name} className='small'>{label}</label>
-            <input type='text' name={name} value={value} onChange={onChange}></input>
+            <input type='text' name={name} id={name} value={value} onChange={onChange}></input>
             {error && <label className='small error'>{error}</label>}
         </div>
     );
@@ -45,8 +45,8 @@ export function LabeledInput1({label, name, value, error, onChange}) {
 export function LabeledInput2({label, value, error, onChange}) {
     return (
         <div className='labeled-2'>
-            <label className='small'>{label}</label>
-            <input type='text' name={label.toLowerCase()} value={value} onChange={onChange}></input>
+            <label className='small' htmlFor={label.toLowerCase()} >{label}</label>
+            <input type='text' name={label.toLowerCase()} id={label.toLowerCase()} value={value} onChange={onChange}></input>
             <label className={error ? 'small error' : ''}>{error}</label>
         </div>
     );

@@ -93,11 +93,13 @@ function CardPayment({cardHidden, setPaymentCompleted}) {
         <div className={cardHidden ? 'hidden' : 'payment-card'}>
             <LabeledInput1 
                 label="Card number" 
+                name={"cardNumber"}
                 value={cardNumber} 
                 error={cardError.cardNumber}
                 onChange={e => setCardNumber(e.target.value)} />
             <LabeledInput1 
                 label="Card holder" 
+                name={"cardHolder"}
                 value={cardHolder} 
                 error={cardError.cardHolder}
                 onChange={e => setCardHolder(e.target.value)} />
