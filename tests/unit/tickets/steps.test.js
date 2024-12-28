@@ -1,8 +1,8 @@
 import React from 'react';
 import '@testing-library/jest-dom';
 import { render, fireEvent, waitFor, screen } from '@testing-library/react';
-import { Navigation, LabeledInput1, LabeledBox, LabeledInput2 } from '../../frontend/static/js/tickets/steps';
-import { StepContext } from '../../frontend/static/js/tickets/StepContext';
+import { Navigation, LabeledInput1, LabeledBox, LabeledInput2 } from '../../../frontend/static/js/tickets/steps';
+import { StepContext } from '../../../frontend/static/js/tickets/StepContext';
 
 describe('Navigation', () => {
   it('renders navigation buttons', () => {

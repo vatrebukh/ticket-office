@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import PassengerInfo from '../../frontend/static/js/tickets/passenger-info';
+import PassengerInfo from '../../../frontend/static/js/tickets/passenger-info';
 
 
 describe('PassengerInfo Component', () => {

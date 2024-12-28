@@ -3,12 +3,12 @@ FROM node:19-alpine AS build
 
 WORKDIR /app
 
-COPY package.json ./
-COPY package-lock.json ./
+COPY package.json package-lock.json ./
 RUN npm install
 
-COPY . ./
-RUN npm run build
+COPY . .
+RUN npm test || exit 1
+RUN npm run build || exit 1
 
 # Stage 2: Serve the app with Nginx
 FROM nginx:alpine

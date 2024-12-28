@@ -21,7 +21,7 @@ describe('HomePage', () => {
     const { getAllByRole } = render(<HomePage />);
     const images = getAllByRole('img');
     expect(images).toHaveLength(2);
-    expect(images[0]).toHaveAttribute('src', '/static/img/bus.jpeg');
-    expect(images[1]).toHaveAttribute('src', '/static/img/train.jpg');
+    expect(images[0]).toHaveAttribute('src', '/img/bus.jpeg');
+    expect(images[1]).toHaveAttribute('src', '/img/train.jpg');
   });
 });
