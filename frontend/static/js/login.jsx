@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import '../css/login.scss';
-import UserProfile from './profile/user-profile';
+import UserProfile from './profile/profile-main';
+import { login } from './service/login-service';
+import { SessionContext } from './profile/SessionContext';
 
 export default function LoginForm() {   
-    const [formData, setFormData] = useState({"login": "", "password": ""});
-    const [authorized, setAuthorized] = useState(true);
+    const [formData, setFormData] = useState({"login": "", "password": "", "error": ""});
+    const [loginning, setLoginning] = useState(false);
+    const [sessionUser, setSessionUser] = useState(null);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -16,18 +19,32 @@ export default function LoginForm() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('Login:', formData.login);
-        setAuthorized(true);
+        setLoginning(true);
+        login(formData).then(userInfo => {
+            setSessionUser(userInfo);
+            setLoginning(false);
+        }).catch(err => {
+            setFormData(prevState => ({
+                ...prevState,
+                error: 'Invalid login or password'
+            }));
+            setLoginning(false);
+        });
     };
 
-    if (authorized) {
-        return <UserProfile username={formData.login || 'johnny'} />;
+    if (sessionUser) {
+        return (
+            <SessionContext.Provider value={sessionUser}>
+                <UserProfile />
+            </SessionContext.Provider>
+        );
     }
 
     return (
         <div className="login-container">
             <form className="login-form" onSubmit={handleSubmit}>
                 <h2>Login</h2>
+                { formData.error && <div className='notification-red'>{formData.error}</div> }
                 <div className="form-group">
                     <label htmlFor="login">Login</label>
                     <input
@@ -36,7 +53,7 @@ export default function LoginForm() {
                         name="login"
                         value={formData.login}
                         onChange={handleChange}
-                        // required
+                        required
                     />
                 </div>
                 <div className="form-group">
@@ -47,10 +64,10 @@ export default function LoginForm() {
                         name="password"
                         value={formData.password}
                         onChange={handleChange}
-                        // required
+                        required
                     />
                 </div>
-                <button type="submit" className="login-button">
+                <button type="submit" className="login-button" disabled={loginning}>
                     Log In
                 </button>
             </form>

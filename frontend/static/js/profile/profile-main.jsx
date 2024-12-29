@@ -1,29 +1,37 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import ProfileMenu from './profile-menu';
 import ProfileInfo from './profile-info';
 import { searchActiveTickets , searchPastTickets} from '../service/ticket-service';
+import { SessionContext } from './SessionContext';
+import LoginForm from '../login';
 
-export default function UserProfile({username}) {
+export default function UserProfile() {
+    const sessionUser = useContext(SessionContext);
+    if (!sessionUser) {
+        return <LoginForm />;
+    }
+
     const [menu, setMenu] = useState(profileMenu);
-
     let activeSection = menu.find(link => link.active)?.section;
+
     return (
         <div className="page">
             <ProfileMenu menu={menu} setMenu={setMenu} />
-            {!activeSection || activeSection == 'info' ? <ProfileInfo username={username} /> : null}
-            {activeSection == 'active' ? <ActiveTrips username={username} /> : null}
-            {activeSection == 'past' ? <PastTrips username={username} /> : null}
+            {!activeSection || activeSection == 'info' ? <ProfileInfo /> : null}
+            {activeSection == 'active' ? <ActiveTrips /> : null}
+            {activeSection == 'past' ? <PastTrips /> : null}
         </div>
     );
 }
 
 
-function ActiveTrips({username}) {
+function ActiveTrips() {
     const [tickets, setTickets] = useState([]);
+    const sessionUser = useContext(SessionContext);
 
     useEffect(() => {
         async function fetchTickets() {
-            const result = await searchActiveTickets(username);
+            const result = await searchActiveTickets(sessionUser.username);
             setTickets(result);
         }
 
@@ -38,12 +46,13 @@ function ActiveTrips({username}) {
     );
 }
 
-function PastTrips({username}) {
+function PastTrips() {
     const [tickets, setTickets] = useState([]);
+    const sessionUser = useContext(SessionContext);
 
     useEffect(() => {
         async function fetchTickets() {
-            const result = await searchPastTickets(username);
+            const result = await searchPastTickets(sessionUser.username);
             setTickets(result);
         }
 

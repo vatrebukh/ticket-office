@@ -16,3 +16,8 @@ export const userTrips = [
     {"id": 103, "username": "johnny", "routeId": 1, "date": "2024-12-20", "passengers": ["John", "Jane"]},
     {"id": 104, "username": "johnny", "routeId": 4, "date": "2024-12-30", "passengers": ["John"]},
 ]
+
+export const users = [
+    {"username": "johnny", "password": "bravo", "fullName": "John River", "city": "Seattle", "role": "user", "miles": 1988},
+    {"username": "jane", "password": "jane", "fullName": "Jane Doe", "city": "Portland", "role": "user", "miles": 0},
+]
